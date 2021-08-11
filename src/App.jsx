@@ -12,16 +12,27 @@ function App() {
   ];
   const [counters, setCounters] = useState(counterData);
 
-  const handleCount = (id, operation) => {
-    console.log("counter with id", id, "operation", operation);
+  const handleCount = (counterToEditId, operation) => {
+    console.log("counter with id", counterToEditId, "operation", operation);
 
-    // const difference = special ? 2 : 1;
-    // const countFix = isNaN(count) ? 0 : count;
+    const countersCopy = [...counters];
 
-    // if (operation === "-") return setCount(countFix - difference);
-    // if (operation === "+") return setCount(countFix + difference);
-    // if (operation === "rs")
-    //   return special ? setCount("start over") : setCount(0);
+    const foundCounterToEdit = countersCopy.find(
+      (c) => c.id === counterToEditId
+    ); // foundCounterToEdit === { id: 2, value: 2 }
+
+    const count = foundCounterToEdit.value;
+    const difference = foundCounterToEdit.isSpecial ? 2 : 1;
+    const countFix = isNaN(count) ? 0 : count;
+
+    if (operation === "-") foundCounterToEdit.value = countFix - difference;
+    if (operation === "+") foundCounterToEdit.value = countFix + difference;
+    if (operation === "rs") {
+      foundCounterToEdit.value = foundCounterToEdit.isSpecial
+        ? "start over"
+        : 0;
+    }
+    setCounters(countersCopy);
   };
 
   return (
