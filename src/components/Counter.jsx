@@ -18,13 +18,19 @@ export default function Counter({ special }) {
     if (operation === "rs")
       return special ? setCount("start over") : setCount(0);
   };
+  const handleDisabled = () => {
+    if (special && count === 0) return true;
+    if (count === "start over") return true;
+  };
   return (
     <div style={{ width: "25%" }}>
       <h2>{special && "Special "}Counter</h2>
       <h2>{count}</h2>
       <div>
         <button onClick={() => handleCount("+")}>{special && "2"}+</button>
-        <button onClick={() => handleCount("-")}>{special && "2"}-</button>
+        <button disabled={handleDisabled()} onClick={() => handleCount("-")}>
+          {special && "2"}-
+        </button>
       </div>
       <button onClick={() => handleCount("rs")}>reset</button>
     </div>
