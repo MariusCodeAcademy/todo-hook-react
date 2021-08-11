@@ -40,11 +40,19 @@ function App() {
   const handleEditTodo = (id, title) => {
     // pakeisti esamo todos masyvo objekta kurio id yra lygus argumento id
     // title i title gauta argumentu.
-    const todosCopy = todos.map(t => {
-      return t.id === id ? {...t, title} : {...t}
-    })
-    setTodos(todosCopy)
-  }
+    const todosCopy = todos.map((t) => {
+      return t.id === id ? { ...t, title } : { ...t };
+    });
+    setTodos(todosCopy);
+  };
+
+  const handleDeleteTodo = (todoToDeleteId) => {
+    // console.log("delete todo with id", todoToDeleteId);
+    // isfiltruoti esama todos masyva ir grazinti versija kurione nera to kurio id yra todoToDeleteId
+    const todoAfterDelete = todos.filter((t) => t.id !== todoToDeleteId);
+    // console.log(todoAfterDelete);
+    setTodos(todoAfterDelete);
+  };
 
   useEffect(() => {
     setTodos(allTodos());
@@ -54,7 +62,12 @@ function App() {
     <div className="App">
       <h2>Todo list</h2>
       <AddTodo onAddTodo={handleAddTodo} />
-      <TodoList onEditTodo={handleEditTodo} todos={todos} onDoneUndone={setDoneUndone} />
+      <TodoList
+        todos={todos}
+        onDoneUndone={setDoneUndone}
+        onEditTodo={handleEditTodo}
+        onDeleteTodo={handleDeleteTodo}
+      />
     </div>
   );
 }
