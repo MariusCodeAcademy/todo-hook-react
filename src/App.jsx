@@ -35,6 +35,15 @@ function App() {
     setCounters(countersCopy);
   };
 
+  const resetCounters = () => {
+    const countersAfterReset = counters.map((c) => ({
+      ...c,
+      value: c.isSpecial ? "start over" : 0,
+    }));
+    console.log("countersAfterReset", countersAfterReset);
+    setCounters(countersAfterReset);
+  };
+
   return (
     <div className="App">
       <div className="d-flex">
@@ -47,7 +56,7 @@ function App() {
           />
         ))}
       </div>
-      <button>ResetAll</button>
+      <button onClick={resetCounters}>ResetAll</button>
     </div>
   );
 }
